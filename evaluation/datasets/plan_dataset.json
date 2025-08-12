@@ -1,0 +1,71 @@
+[
+    {
+      "messages": [
+        { "role": "user", "content": "I want an easy salty recipe" }
+      ],
+      "expected_plan": "1. query_search: Retrieve all recipes with difficulty set to 'easy' and that have a relationship to the 'Salty' flavor."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "I want an easy salty recipe" },
+        { "role": "ai", "content": "Do you have any other preferences?" },
+        { "role": "user", "content": "Must be cookable in under 30 minutes." }
+      ],
+      "expected_plan": "1. query_search: Retrieve all recipes with difficulty 'easy', cooking_time_minutes less than or equal to 30 and that have a relationship 'HAS_FLAVOR' with the 'Flavor' node where name is 'Salty'."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Show me vegan dinner recipes that are easy to make, salty, and under 500 calories per serving." }
+      ],
+      "expected_plan": "1. query_search: Find all Recipe nodes that fit the following criteria: FITS_DIET relationship with the 'Vegan' diet node, SERVED_DURING relationship with the 'Dinner' meal moment node, HAS_FLAVOR relationship with the 'Salty' flavor node, difficulty property set to 'easy', and have a total calorie count (sum of all food products, based on the grams in the CONTAINS relationship) less than 500."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "I want a gluten-free lunch recipe with a sweet flavor profile, medium complexity, and less than 30 minutes cooking time." }
+      ],
+      "expected_plan": "1. query_search: Retrieve 'Diet', 'MealMoment', and 'Flavor' nodes for 'Gluten-free', 'Lunch', and 'Sweet', respectively.\n2. query_search: Retrieve 'Recipe' nodes with 'difficulty' of 'medium' and 'cooking_time_minutes' less than 30, and filter them to find those connected to the previously retrieved 'Diet' (Step 1), 'MealMoment' (Step 1), and 'Flavor' (Step 1) nodes."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Give me a hard vegetarian main course recipe for breakfast with a sour flavor profile and under 400 calories." }
+      ],
+      "expected_plan": "1. query_search: Identify the 'hard' difficulty level from the Recipe node properties.\n2. semantic_search: Identify the Diet node with name similar to 'Vegetarian'.\n3. semantic_search: Identify the MealCourse node with name similar to 'Main'.\n4. semantic_search: Identify the MealMoment node with name similar to 'Breakfast'.\n5. semantic_search: Identify the Flavor node with name similar to 'Sour'.\n6. query_search: Retrieve recipes that match the following criteria: difficulty is the value identified in step 1, fits the Diet node found in step 2, is part of the MealCourse node from step 3, served during the MealMoment node from step 4, has the Flavor node from step 5, and has calories under 400."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Find me a lactose-free dessert recipe for dinner that is spicy, easy, and takes less than 20 minutes to cook." }
+      ],
+      "expected_plan": "1. query_search: Find all the 'Recipe' nodes with 'difficulty' as 'easy', 'cooking_time_minutes' less than 20 and that have a relationship 'HAS_FLAVOR' to the 'Flavor' node."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Give me a shopping list for the recipe 'Spicy Vegan Chili'." }
+      ],
+      "expected_plan": "1. semantic_search: Find the Recipe node with a name similar to 'Spicy Vegan Chili'.\n2. query_search: Retrieve the FoodProduct nodes connected to the identified Recipe node from Step 1 through the CONTAINS relationship and find the corresponding StoreProduct nodes using the IS_INSTANCE_OF relationship. Limit 50."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "What do I need to buy to make gluten-free pancakes?" }
+      ],
+      "expected_plan": "1. semantic_search: Find the Recipe node with a name similar to \"pancakes\".\n2. query_search: Filter the Recipe found in Step 1 checking if it has a relationship 'FITS_DIET' with the node 'Diet' with name 'Gluten-free'.\n3. query_search: Retrieve the FoodProducts contained in the gluten-free pancake recipe identified in Step 2 and find StoreProducts that are instances of these FoodProducts."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "List the store products I need for 'Lasagna', and show me options for the Barilla brand." }
+      ],
+      "expected_plan": "1. semantic_search: Find the Recipe node with a name similar to 'Lasagna'.\n2. query_search: Retrieve the FoodProduct nodes connected to the Recipe node found in Step 1 via the CONTAINS relationship.\n3. query_search: Find StoreProduct nodes that are instances of the FoodProduct nodes retrieved in Step 2 using the IS_INSTANCE_OF relationship, filtering to include only those with the brand 'Barilla'. Limit 50."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Where can I find tofu in Edeka" }
+      ],
+      "expected_plan": "1. semantic_search: Find the StoreProduct node with a name similar to 'tofu'.\n2. query_search: Using the StoreProduct node identified in step 1, find the BUYABLE_IN relationship to the Supermarket node with the name 'Edeka' to determine the aisle, position, and shelf where tofu is located."
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Where is almond milk located in Kaufland?" }
+      ],
+      "expected_plan": "1. semantic_search: Find the StoreProduct node with a name similar to 'almond milk'.\n2. query_search: Using the StoreProduct node found in step 1, find the BUYABLE_IN relationship to the Supermarket node with the name 'Kaufland' to determine the aisle, position, and shelf where it is located. Limit 50."
+    }
+]
+  

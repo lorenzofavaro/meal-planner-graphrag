@@ -1,0 +1,39 @@
+services:
+  neo4j_service:
+    container_name: neo4j
+    image: neo4j:5.25-community
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    env_file:
+      - ./neo4j/.env-docker
+    volumes:
+      - ./neo4j/init.cypher:/var/lib/neo4j/import/init.cypher
+      - ./neo4j/neo4j_entrypoint.sh:/var/lib/neo4j/import/neo4j_entrypoint.sh
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 1s
+      timeout: 10s
+      retries: 20
+      start_period: 3s
+    entrypoint: /var/lib/neo4j/import/neo4j_entrypoint.sh
+    networks:
+      - app_network
+
+  app_service:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      neo4j_service:
+        condition: service_healthy
+    env_file:
+      - ./app/.env-docker
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

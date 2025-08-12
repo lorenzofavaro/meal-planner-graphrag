@@ -1,0 +1,5 @@
+{
+  "embedding_model": "text-embedding-3-small",
+  "inference_model_params": {"model": "openai:gpt-4o", "temperature": 0.0, "streaming": true},
+  "max_query_length": 2000
+}

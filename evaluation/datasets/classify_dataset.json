@@ -1,0 +1,65 @@
+[
+    {
+      "messages": [
+        { "role": "user", "content": "I want an easy salty recipe" }
+      ],
+      "expected_classification": "more-info"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "I want an easy salty recipe" },
+        { "role": "ai", "content": "Do you have any other preferences?" },
+        { "role": "user", "content": "No" }
+      ],
+      "expected_classification": "valid"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "how much is 2+2?" }
+      ],
+      "expected_classification": "general"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "what is the weather like in Munich?" }
+      ],
+      "expected_classification": "general"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Suggest me some recipes with pasta for lunch. It must be a main course of medium difficulty and it has to have less than 600 calories. I have no other preferences" }
+      ],
+      "expected_classification": "valid"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "I want to cook something with these constraints:\n- sweet\n- less than 400 calories\n- vegan.\nNo other constraints please." }
+      ],
+      "expected_classification": "valid"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Help me finding the extra virgin olive oil, of Filippo Berio brand, in the Edeka supermarket." }
+      ],
+      "expected_classification": "valid"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Who is Donald Trump?" }
+      ],
+      "expected_classification": "general"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Give me the shopping list for the recipe pasta alla carbonara." }
+      ],
+      "expected_classification": "valid"
+    },
+    {
+      "messages": [
+        { "role": "user", "content": "Give me the location of spaghetti pasta inside Lidl." }
+      ],
+      "expected_classification": "valid"
+    }
+  ]
+  

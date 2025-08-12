@@ -1,0 +1,4 @@
+.DS_Store
+graph_dump.cypher
+.venv
+scripts
