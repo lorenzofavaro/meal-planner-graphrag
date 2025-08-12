@@ -68,7 +68,7 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
       ```sh
       cp app/.env.example app/.env
       cp app/.env-docker.example app/.env-docker
-      cp neo4j/.env.neo4j.example neo4j/.env.neo4j
+      cp neo4j/.env-docker.example neo4j/.env-docker
       ```
     2. Edit these files to set your API keys, database credentials, Neo4j settings, and other configuration as needed.
   - These files are required for both local development and Docker-based deployment.
