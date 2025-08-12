@@ -79,11 +79,9 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
    docker-compose up --build
    ```
 
-4. **Initialize the graph:**
-   - Run the Cypher scripts in `neo4j/init.cypher`
-
-5. **Access the application:**
-   - The app will be available at `http://localhost:8501` (see `docker-compose.yml` for port mapping).
+4. **Access the application:**
+   - The app will be available at `http://localhost:8501`
+   - The neo4j database will be available at `http://localhost:7474`
 
 ### Development
 
