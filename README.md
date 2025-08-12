@@ -28,7 +28,6 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
 │   ├── app.py          # Application entry point
 │   ├── config.py       # Configuration
 │   └── requirements.txt
-├── scripts/            # Notebooks for graph creation, embedding, and architecture
 ├── neo4j/              # Neo4j initialization scripts and entrypoint
 ├── evaluation/         # Evaluation notebooks and datasets
 ├── docs/               # Documentation and images
@@ -59,7 +58,7 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
 1. **Clone the repository:**
    ```sh
    git clone <repo-url>
-   cd meal-planner
+   cd meal-planner-graphrag
    ```
 
 2. **Configure environment variables:**
@@ -81,16 +80,15 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
    ```
 
 4. **Initialize the graph:**
-   - Run the Cypher scripts in `neo4j/init.cypher` or use the provided notebooks in `scripts/` to populate the database.
+   - Run the Cypher scripts in `neo4j/init.cypher`
 
 5. **Access the application:**
-   - The app will be available at `http://localhost:<port>` (see `docker-compose.yml` for port mapping).
+   - The app will be available at `http://localhost:8501` (see `docker-compose.yml` for port mapping).
 
 ### Development
 
 - Main application logic is in [`app/app.py`](app/app.py).
 - Prompts and LLM logic are in [`app/core/prompts.py`](app/core/prompts.py).
-- Notebooks for graph creation and embedding are in [`scripts/`](scripts/).
 - Evaluation tools are in [`evaluation/`](evaluation/).
 
 ### Example Usage
@@ -106,8 +104,6 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
   Contains prompt templates for research plan generation, review, and Cypher query generation.
 - [`app/core/state_graph/nodes/main_graph/create_research_plan.py`](app/core/state_graph/nodes/main_graph/create_research_plan.py):  
   Implements research plan review and optimization.
-- [`scripts/react_tool_calling_arch.ipynb`](scripts/react_tool_calling_arch.ipynb):  
-  Demonstrates the multi-agent architecture and tool usage.
 - [`neo4j/init.cypher`](neo4j/init.cypher):  
   Initializes the Neo4j database schema and sample data.
 
