@@ -9,6 +9,16 @@ from config import config as app_config
 async def respond_to_general_query(
     state: AgentState, *, config: RunnableConfig
 ) -> dict[str, list[BaseMessage]]:
+    """
+    Generates a response to a general user query based on the agent's current state and routing logic.
+
+    Args:
+        state (AgentState): The current state of the agent, including routing logic and messages.
+        config (RunnableConfig): Configuration for the runnable execution.
+
+    Returns:
+        dict[str, list[BaseMessage]]: A dictionary containing the generated response message(s).
+    """
     model = init_chat_model(
         name="respond_to_general_query", **app_config["inference_model_params"]
     )

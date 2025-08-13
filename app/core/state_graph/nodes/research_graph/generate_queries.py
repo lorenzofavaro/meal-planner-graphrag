@@ -12,6 +12,18 @@ from langchain_neo4j.chains.graph_qa.cypher_utils import Schema
 
 
 async def correct_query_by_llm(query: str) -> str:
+    """Correct a Cypher query using a language model.
+    
+    This function uses an LLM to review and correct a Cypher query based on
+    the Neo4j graph schema. It provides schema-aware correction to ensure
+    the query is properly formatted and uses valid relationships and nodes.
+    
+    Args:
+        query (str): The Cypher query to be corrected.
+        
+    Returns:
+        str: The corrected Cypher query.
+    """
     model = init_chat_model(
         name="correct_query_by_llm", **app_config["inference_model_params"]
     )
@@ -23,12 +35,22 @@ async def correct_query_by_llm(query: str) -> str:
         {"role": "human", "content": query},
     ]
     response = await model.ainvoke(messages)
-    # print(f"Query before LLM correction: {query}")
-    # print(f"Query after LLM correction: {response.content}")
     return response.content
 
 
 def correct_query_by_parser(query: str) -> str:
+    """Correct a Cypher query using a parser-based corrector.
+    
+    This function uses the CypherQueryCorrector to parse and correct
+    Cypher queries based on the graph schema. It extracts the Cypher
+    query from the text and applies structural corrections.
+    
+    Args:
+        query (str): The text containing the Cypher query to be corrected.
+        
+    Returns:
+        str: The corrected Cypher query.
+    """
     corrector_schema = [
         Schema(el["start"], el["type"], el["end"])
         for el in neo4j_graph.get_structured_schema.get("relationships", [])
@@ -37,15 +59,28 @@ def correct_query_by_parser(query: str) -> str:
 
     extracted_query = extract_cypher(text=query)
     corrected_query = cypher_query_corrector(extracted_query)
-
-    # print(f"Query before parser correction: {query}")
-    # print(f"Query after parser correction: {corrected_query}")
     return corrected_query
 
 
 async def generate_queries(
     state: ResearcherState, *, config: RunnableConfig
 ) -> dict[str, list[str]]:
+    """Generate and correct Cypher queries for a research step.
+    
+    This function generates multiple Cypher queries based on a research question
+    and existing knowledge context. It uses an LLM to generate initial queries,
+    then applies both LLM-based and parser-based corrections to ensure the
+    queries are valid and properly formatted for the Neo4j graph database.
+    
+    Args:
+        state (ResearcherState): The current researcher state containing the
+            research step question and accumulated knowledge.
+        config (RunnableConfig): Configuration for the runnable execution.
+        
+    Returns:
+        dict[str, list[str]]: A dictionary with a "queries" key containing
+            a list of corrected Cypher queries.
+    """
     
     class Response(TypedDict):
         queries: list[str]

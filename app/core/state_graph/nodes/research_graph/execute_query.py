@@ -18,6 +18,21 @@ def remove_embedding_keys(obj):
 
 
 async def execute_query(state: QueryState, *, config: RunnableConfig):
+    """
+    Execute a query against the Neo4j knowledge graph and format the results.
+    
+    This function takes a Cypher query from the state, executes it against the Neo4j
+    graph database, and returns the top results with embedding keys removed for cleaner
+    output. The results are formatted as knowledge entries that can be used by other
+    nodes in the research graph.
+    
+    Args:
+        state (QueryState): The current state containing the query to execute
+        config (RunnableConfig): Configuration for the runnable execution
+        
+    Returns:
+        dict: A dictionary containing a list of knowledge entries with the query results
+    """
     # print(f"Query for the retrieval process: {state.query}")
     top_k = 10
     response = neo4j_graph.query(state.query)[:top_k]

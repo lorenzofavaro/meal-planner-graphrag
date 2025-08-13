@@ -10,6 +10,16 @@ from config import config as app_config
 async def analyze_and_route_query(
     state: AgentState, *, config: RunnableConfig
 ) -> dict[str, Router]:
+    """
+    Analyzes the current agent state and determines the routing logic for the next step.
+
+    Args:
+        state (AgentState): The current state of the agent, including messages and context.
+        config (RunnableConfig): Configuration for the runnable execution.
+
+    Returns:
+        dict[str, Router]: A dictionary containing the updated router object.
+    """
     model = init_chat_model(
         name="analyze_and_route_query", **app_config["inference_model_params"]
     )

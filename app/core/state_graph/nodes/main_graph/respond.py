@@ -9,6 +9,16 @@ from config import config as app_config
 async def respond(
     state: AgentState, *, config: RunnableConfig
 ) -> dict[str, list[BaseMessage]]:
+    """
+    Generates a final response to the user based on the agent's accumulated knowledge and messages.
+
+    Args:
+        state (AgentState): The current state of the agent, including knowledge and messages.
+        config (RunnableConfig): Configuration for the runnable execution.
+
+    Returns:
+        dict[str, list[BaseMessage]]: A dictionary containing the generated response message(s).
+    """
     print("--- RESPONSE GENERATION STEP ---")
     model = init_chat_model(name="respond", **app_config["inference_model_params"])
     formatted_knowledge = "\n\n".join([item["content"] for item in state.knowledge])

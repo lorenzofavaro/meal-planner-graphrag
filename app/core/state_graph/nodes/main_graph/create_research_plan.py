@@ -11,6 +11,15 @@ from config import config as app_config
 
 
 async def review_research_plan(plan: Plan) -> Plan:
+    """
+    Reviews a research plan to ensure its quality and relevance.
+
+    Args:
+        plan (Plan): The research plan to be reviewed.
+
+    Returns:
+        Plan: The reviewed and potentially modified research plan.
+    """
     formatted_plan = ""
     for i, step in enumerate(plan["steps"]):
         formatted_plan += f"{i+1}. ({step['type']}): {step['question']}\n"
@@ -29,6 +38,15 @@ async def review_research_plan(plan: Plan) -> Plan:
 
 
 async def reduce_research_plan(plan: Plan) -> Plan:
+    """
+    Reduces a research plan by simplifying or condensing its steps.
+
+    Args:
+        plan (Plan): The research plan to be reduced.
+
+    Returns:
+        Plan: The reduced research plan.
+    """
     formatted_plan = ""
     for i, step in enumerate(plan["steps"]):
         formatted_plan += f"{i+1}. ({step['type']}): {step['question']}\n"
@@ -49,6 +67,16 @@ async def reduce_research_plan(plan: Plan) -> Plan:
 async def create_research_plan(
     state: AgentState, *, config: RunnableConfig
 ) -> dict[str, list[str] | str]:
+    """
+    Creates, reduces, and reviews a research plan based on the agent's current knowledge and messages.
+
+    Args:
+        state (AgentState): The current state of the agent, including knowledge and messages.
+        config (RunnableConfig): Configuration for the runnable execution.
+
+    Returns:
+        dict[str, list[str] | str]: A dictionary containing the final steps of the reviewed plan and an empty knowledge list.
+    """
     formatted_knowledge = "\n".join([item["content"] for item in state.knowledge])
     model = init_chat_model(
         name="create_research_plan", **app_config["inference_model_params"]

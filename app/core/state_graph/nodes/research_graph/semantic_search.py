@@ -10,6 +10,22 @@ import openai
 
 
 def execute_semantic_search(node_label: str, attribute_name: str, query: str):
+    """Execute a semantic search on Neo4j vector indexes.
+    
+    This function performs vector-based similarity search using OpenAI embeddings
+    to find nodes in the Neo4j graph database that are semantically similar to
+    the provided query. It converts the query to an embedding vector and searches
+    the corresponding vector index for the most similar nodes.
+    
+    Args:
+        node_label (str): The label of the node type to search (e.g., 'Recipe', 'FoodProduct').
+        attribute_name (str): The attribute/property of the node to search within (e.g., 'name', 'description').
+        query (str): The search query to find semantically similar content.
+        
+    Returns:
+        list: A list of dictionaries containing the matching nodes with their attributes,
+              ordered by similarity score (highest first).
+    """
     index_name = f"{node_label.lower()}_{attribute_name}_index"
     top_k = 1
     query_embedding = (
@@ -38,6 +54,22 @@ def execute_semantic_search(node_label: str, attribute_name: str, query: str):
 
 
 async def semantic_search(state: ResearcherState, *, config: RunnableConfig):
+    """Perform semantic search to find relevant nodes in the research graph.
+    
+    This function analyzes a research question to determine optimal search parameters
+    and executes a semantic search on the Neo4j graph database. It uses an LLM to
+    identify which node type and attribute should be searched, then performs vector-based
+    similarity search to find semantically related content that can help answer the question.
+    
+    Args:
+        state (ResearcherState): The current researcher state containing the
+            research step question and accumulated knowledge.
+        config (RunnableConfig): Configuration for the runnable execution.
+        
+    Returns:
+        dict[str, list]: A dictionary with a "knowledge" key containing
+            a list with the semantic search results formatted as knowledge items.
+    """
     class Response(TypedDict):
         node_label: str
         attribute_name: str
@@ -74,5 +106,4 @@ async def semantic_search(state: ResearcherState, *, config: RunnableConfig):
         "content": f"Executed Semantic Search on {response['node_label']}.{response['attribute_name']} for values similar to: '{response['query']}'\nResults: {joined_search_names}",
     }
 
-    # print(f"New knowledge: {knowledge}")
     return {"knowledge": [knowledge]}

@@ -9,6 +9,16 @@ from config import config as app_config
 async def ask_for_more_info(
     state: AgentState, *, config: RunnableConfig
 ) -> dict[str, list[BaseMessage]]:
+    """
+    Asks the user for more information based on the current routing logic.
+
+    Args:
+        state (AgentState): The current state of the agent, including routing logic and messages.
+        config (RunnableConfig): Configuration for the runnable execution.
+
+    Returns:
+        dict[str, list[BaseMessage]]: A dictionary containing the new message(s) requesting more information.
+    """
     model = init_chat_model(
         name="ask_for_more_info", **app_config["inference_model_params"]
     )
