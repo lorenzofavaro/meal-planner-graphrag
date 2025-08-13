@@ -2,7 +2,7 @@
 
 ## Overview
 
-Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a Neo4j graph database, semantic search, and LLM-driven reasoning to generate personalized recipe recommendations and shopping lists. The system is designed for flexibility, supporting complex dietary constraints, ingredient mapping, and efficient retrieval from a rich recipe/product knowledge graph.
+This repository showcases the implementation of a GraphRAG (Graph-based Retriever-Augmented Generation) meal planning assistant. The project leverages a Neo4j graph database, semantic search, and LLM-driven reasoning to generate personalized recipe recommendations and shopping lists based on user preferences and dietary needs. By combining graph-based retrieval with advanced language models, the system efficiently supports complex dietary constraints, ingredient mapping, and accurate information retrieval from a rich recipe and product knowledge graph.
 
 ## Architecture
 ![Architecture](docs/images/architecture.png)
@@ -95,15 +95,6 @@ Meal Planner GraphRAG is an AI-powered meal planning assistant that leverages a 
   Ask for "Quick vegetarian breakfast recipes under 30 minutes" and the system will generate a research plan, execute Cypher queries, and return curated recipes.
 - **Shopping List:**  
   After selecting recipes, request a shopping list to get mapped store products.
-
-## Key Components
-
-- [`app/core/prompts.py`](app/core/prompts.py):  
-  Contains prompt templates for research plan generation, review, and Cypher query generation.
-- [`app/core/state_graph/nodes/main_graph/create_research_plan.py`](app/core/state_graph/nodes/main_graph/create_research_plan.py):  
-  Implements research plan review and optimization.
-- [`neo4j/init.cypher`](neo4j/init.cypher):  
-  Initializes the Neo4j database schema and sample data.
 
 ## Evaluation
 
